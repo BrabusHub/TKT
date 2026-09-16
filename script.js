@@ -1,0 +1,5 @@
+const reveal=document.getElementById('reveal');
+reveal.addEventListener('click',()=>{const content=document.getElementById('surprise');content.hidden=false;reveal.setAttribute('aria-expanded','true');reveal.innerHTML='Notre escapade nous attend <span aria-hidden="true">↓</span>';document.getElementById('lettre').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});});
+const tabs=[...document.querySelectorAll('[role="tab"]')];
+function selectTab(tab){tabs.forEach(t=>{const selected=t===tab;t.setAttribute('aria-selected',String(selected));t.tabIndex=selected?0:-1;document.getElementById(t.getAttribute('aria-controls')).hidden=!selected;});}
+tabs.forEach((tab,i)=>{tab.addEventListener('click',()=>selectTab(tab));tab.addEventListener('keydown',e=>{let next;if(e.key==='ArrowRight')next=(i+1)%tabs.length;if(e.key==='ArrowLeft')next=(i+tabs.length-1)%tabs.length;if(e.key==='Home')next=0;if(e.key==='End')next=tabs.length-1;if(next!==undefined){e.preventDefault();selectTab(tabs[next]);tabs[next].focus();}});});
